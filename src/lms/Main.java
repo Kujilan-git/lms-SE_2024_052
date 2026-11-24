@@ -1,25 +1,36 @@
 package lms;
 
 import lms.model.Book;
-import lms.model.Member;
+import lms.model.DVD;
+import lms.model.Staff;
+import lms.model.Student;
 import lms.service.Library;
 
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
 
-        library.addBook(new Book("Clean Code", "Robert C. Martin", "978-0132350884"));
-        library.addBook(new Book("Effective Java", "Joshua Bloch", "978-0134685991"));
-        library.addBook(new Book("The Pragmatic Programmer", "Hunt & Thomas", "978-0135957059"));
+        Book b1 = new Book("B001", "Clean Code", "Robert C. Martin");
+        Book b2 = new Book("B002", "Effective Java", "Joshua Bloch");
+        DVD d1 = new DVD("D001", "Introduction to Algorithms", 120);
 
-        library.addMember(new Member("M001", "Nadeesha Perera"));
-        library.addMember(new Member("M002", "Kasun Silva"));
+        library.addItem(b1);
+        library.addItem(b2);
+        library.addItem(d1);
 
-        library.listBooks();
+        library.addMember(new Student("M001", "Nadeesha Perera"));
+        library.addMember(new Staff("M002", "Kasun Silva"));
+
+        library.listItems();
         library.listMembers();
 
+        library.printAllLateFees(3);
+
+        library.streamIfPossible(d1);
+        library.streamIfPossible(b1);
+
         try {
-            library.addBook(new Book("", "Nobody", "000-0000000000"));
+            library.addItem(new Book("", "Nobody", "Unknown"));
         } catch (IllegalArgumentException exception) {
             System.out.println("Rejected invalid book: " + exception.getMessage());
         }
